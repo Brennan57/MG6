@@ -1,2 +1,5 @@
 # MG6
 
+1. I think that the entire for loop will complete before the update method finishes. If you have a really long for loop, it would make the game lag, because the computer needs to finish the loop before going on to the next frame
+
+2. One of the first things i noticed was the the play was able to jump while in the air if they fall off a platform. I also noticed that the player would get stuck inside of the platform sometimes. The player is allowed to jump into the air since we never set isGrounded to false when the player falls off of the platform. The player gets stuck in the platform because the collider of the player gets enabled whenever the player isn't traveling up any more, so if the player reaches the peak of their jump and part of the sprite is still in the platform, the player can get stuck.
