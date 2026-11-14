@@ -6,6 +6,7 @@ public class Rat : MonoBehaviour
     [SerializeField] private float _spawnAmount;
     [SerializeField] private GameObject _ratPrefab;
     [SerializeField] private SpriteRenderer _explosionPrefab;
+    private int kickamt=0;
 
     private Color[] _colors = new Color[3]
     {
@@ -34,7 +35,20 @@ public class Rat : MonoBehaviour
         //      color: first yellow, then red, then blue, then looping back
         //      around to yellow, etc.
 
+        if(collision.gameObject.CompareTag("Attack")){
+            for(int i=0;i<_spawnAmount;i++){
+                SpawnSmallRat();
+            }
 
+            transform.localScale*=_shrinkAmount;
+
+            SpawnExplosion(_colors[kickamt]);
+            kickamt++;
+            if(kickamt>=3){
+                kickamt=0;
+            }
+
+        }
         // STEP 2 -------------------------------------------------------------
     }
 
@@ -51,7 +65,8 @@ public class Rat : MonoBehaviour
     private void SpawnSmallRat()
     {
         GameObject rat = Instantiate(_ratPrefab);
-
+        rat.transform.localScale = new Vector3(2,2,1);
+        
         Vector3 pos = Random.onUnitSphere;
         rat.transform.position += pos;
 
@@ -60,9 +75,9 @@ public class Rat : MonoBehaviour
         //      rotation correctly.
         // Your game should look exaclty like the finished example.
 
-        //float randomAngle = Random.Range(0, 360);
-        //Vector3 rotationAngles = new Vector3(0, randomAngle, 0);
-        //rat.transform.Rotate(rotationAngles);
+        float randomAngle = Random.Range(0f, 360f);
+        Vector3 rotationAngles = new Vector3(0, 0, randomAngle);
+        rat.transform.Rotate(rotationAngles);
 
         // STEP 3 -------------------------------------------------------------
     }
